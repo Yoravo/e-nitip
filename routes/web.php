@@ -32,6 +32,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('admin/activity', [AdminController::class, 'activity'])->name('admin.activity');
 Route::get('admin/activity/finish/{id}', [AdminController::class, 'finish'])->name('admin.activity.finish');
+Route::post('/admin/activity/finish/confirm/{id}', [AdminController::class, 'finishConfirm'])->name('admin.activity.finish.confirm');
 
 
     // Locker reservation route (to reserve up to 5 lockers)
