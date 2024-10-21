@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - E-Nitip</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="row" style="width: 100%; max-width: 800px;">
+            <!-- Login Form (without card) -->
+            <div class="col-md-6 d-flex flex-column justify-content-center">
+                <h3 class="text-center text-danger mb-4">LOGIN</h3>
+
+                <!-- Login Form -->
+                <form action="{{ route('login') }}" method="POST" style="padding: 20px;">
+                    @csrf
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    </div>
+
+                    <div class="form-group text-right">
+                        <a href="{{ route('password.request') }}" class="text-primary">Forgot Password?</a>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-danger btn-block">Login</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Logo Section -->
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <div>
+                    <img src="{{ asset('asset/e-nitip-high-resolution-logo-red.png') }}" alt="E-Nitip Logo" class="img-fluid">
+                    <h4 class="text-center text-danger mt-4">E-Nitip</h4>
+                    <p class="text-center">Your Safety Storage</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
