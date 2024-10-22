@@ -15,8 +15,8 @@ class CreateLockersTable extends Migration
     {
         Schema::create('lockers', function (Blueprint $table) {
             $table->id('locker_id');
-            $table->string('locker_code', 5)->unique(); // E.g., A-1, B-2
-            $table->boolean('is_available')->default(true); // Tracks if the locker is available
+            $table->string('locker_code', 5)->unique(); 
+            $table->boolean('is_available')->default(true); 
             $table->timestamps();
         });
     }

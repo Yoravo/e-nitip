@@ -162,10 +162,4 @@
             @endif
         </div>
     </div>
-
-    <script>
-        $(document).on('hidden.bs.modal', function () {
-            $('.modal-backdrop').remove(); // Hapus semua backdrop setiap kali modal ditutup
-        });
-    </script>
 @endsection

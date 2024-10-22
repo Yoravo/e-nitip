@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,34 +7,24 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>@yield('judul')</title>
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('asset/media/e-nitip/e-nitip-favicon-red.png') }}" />
-
-    <!-- Add Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Additional Styles -->
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('asset/css/styles.css') }}" rel="stylesheet" />
-    <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-danger">
-        <!-- Navbar Brand-->
+
         <a class="navbar-brand fw-bold ps-4" href="{{ route('admin.dashboard') }}">E-Nitip</a>
-        <!-- Sidebar Toggle-->
+
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 text-white" id="sidebarToggle"
             href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar-->
+
         <ul class="navbar-nav d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <li class="nav-item dropdown">
+            <li class=" dropdown nav-item">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i></a>
+                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
@@ -63,23 +52,21 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Admin Page</div>
-
-                        <!-- Link ke Dashboard -->
                         <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
                             href="{{ route('admin.dashboard') }}">
                             <div class="sb-nav-link-icon">
-                                <i class="fas fa-home {{ request()->routeIs('admin.dashboard') ? 'text-primary' : '' }}"></i>
+                                <i
+                                    class="fas fa-home {{ request()->routeIs('admin.dashboard') ? 'text-primary' : '' }}"></i>
                             </div>
                             <span class="{{ request()->routeIs('admin.dashboard') ? 'text-primary' : '' }} fw-bold">
                                 Home
                             </span>
                         </a>
-
-                        <!-- Link ke activity -->
                         <a class="nav-link {{ request()->routeIs('admin.activity') ? 'active' : '' }}"
                             href="{{ route('admin.activity') }}">
                             <div class="sb-nav-link-icon">
-                                <i class="fas fa-file-alt {{ request()->routeIs('admin.activity') ? 'text-primary' : '' }}"></i>
+                                <i
+                                    class="fas fa-file-alt {{ request()->routeIs('admin.activity') ? 'text-primary' : '' }}"></i>
                             </div>
                             <span class="{{ request()->routeIs('admin.activity') ? 'text-primary' : '' }} fw-bold">
                                 Activity
@@ -122,14 +109,9 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('asset/js/datatables-simple-demo.js') }}"></script>
-    <!-- Bootstrap JS dan Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-<!-- jQuery (untuk modal Bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script src="{{ asset('asset/js/close-modal.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('asset/js/close-modal.js') }}"></script>
 </body>
 
 </html>

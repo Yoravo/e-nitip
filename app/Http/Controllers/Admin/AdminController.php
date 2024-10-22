@@ -89,23 +89,23 @@ class AdminController extends Controller
     $pickupTime = strtotime($request->pickup_time);
     $now = time();
 
-    // Jika waktu pengambilan lebih awal, hitung sesuai durasi aktual
+    
     if ($now < $pickupTime) {
-        // Waktu pengambilan lebih cepat
+        
         $totalMinutes = ($now - strtotime($request->deposit_time)) / 60;
         $totalHours = ceil($totalMinutes / 60);
 
         if ($totalMinutes <= 30) {
-            $totalCost = 2500; // Biaya setengah jam
+            $totalCost = 2500; 
         } elseif ($totalMinutes > 30 && $totalMinutes <= 60) {
-            $totalCost = 5000; // Biaya satu jam
+            $totalCost = 5000; 
         } else {
-            $totalCost = $totalHours * 5000; // Biaya per jam
+            $totalCost = $totalHours * 5000; 
         }
 
         $reservation->total_price = $totalCost;
 
-        // Mark lockers as available and delete reservation
+        
         foreach ($reservation->locker_codes as $lockerCode) {
             Locker::where('locker_code', $lockerCode)->update(['is_available' => 1]);
         }
@@ -114,15 +114,15 @@ class AdminController extends Controller
 
         return redirect()->route('admin.activity')->with('success', 'Reservasi selesai lebih cepat. Total biaya: Rp. ' . number_format($totalCost, 2, ',', '.'));
     } else {
-        // Waktu pengambilan sesuai atau lebih lama
+        
         $totalMinutesLate = ($now - $pickupTime) / 60;
         if ($totalMinutesLate > 0) {
-            // Hitung denda jika terlambat
-            $penalty = ceil($totalMinutesLate / 120) * 5000; // Denda tambahan setiap 2 jam
+            
+            $penalty = ceil($totalMinutesLate / 120) * 5000; 
             $reservation->penalty = $penalty;
         }
 
-        // Jika tepat waktu atau terlambat, mark lockers as available and delete reservation
+        
         foreach ($reservation->locker_codes as $lockerCode) {
             Locker::where('locker_code', $lockerCode)->update(['is_available' => 1]);
         }

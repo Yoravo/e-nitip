@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('item_name');
-            $table->string('phone_number');
+            $table->integer('phone_number');
             $table->json('locker_codes');
             $table->time('deposit_time');
             $table->time('pickup_time')->nullable();
