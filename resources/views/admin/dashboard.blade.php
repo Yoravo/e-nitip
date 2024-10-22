@@ -65,8 +65,9 @@
                     </div>
                     <div class="form-group">
                         <label for="phone_number">Nomor Telepon</label>
-                        <input type="tel" name="phone_number" id="phone_number" class="form-control" required>
+                        <input type="tel" name="phone_number" id="phone_number" class="form-control" required pattern="\d*">
                     </div>
+                    
                     <div class="row">
                         <div class="col">
                             <label for="deposit_time">Jam Penitipan</label>
@@ -83,4 +84,5 @@
                 </form>
             </div>
         </div>
+        
     @endsection

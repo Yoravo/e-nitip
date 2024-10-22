@@ -23,7 +23,9 @@ class AdminController extends Controller
         foreach ($reservations as $reservation) {
             $startTime = Carbon::parse($reservation->deposit_time);
             $endTime = Carbon::parse($reservation->pickup_time);
-            $reservation->total_price = $this->calculateDeposit($startTime, $endTime);
+            $numLockers = is_array($reservation->locker_codes) ? count($reservation->locker_codes) : 1;
+            $priceForOneLocker = $this->calculateDeposit($startTime, $endTime);
+            $reservation->total_price = $priceForOneLocker * $numLockers;
         }
 
         return view('admin.activity', compact('lockers', 'reservations'));
@@ -84,54 +86,54 @@ class AdminController extends Controller
         return redirect()->route('admin.activity')->with('success', 'Selected lockers confirmed. Reservation updated.');
     }
     public function finishConfirm(Request $request, $id)
-{
-    $reservation = Reservation::find($id);
-    $pickupTime = strtotime($request->pickup_time);
-    $now = time();
+    {
+        $reservation = Reservation::find($id);
+        $depositTime = strtotime($reservation->deposit_time);
+        $pickupTime = strtotime($request->pickup_time);
+        $now = time();
 
-    
-    if ($now < $pickupTime) {
-        
-        $totalMinutes = ($now - strtotime($request->deposit_time)) / 60;
-        $totalHours = ceil($totalMinutes / 60);
+        $numLockers = is_array($reservation->locker_codes) ? count($reservation->locker_codes) : 1;
 
-        if ($totalMinutes <= 30) {
-            $totalCost = 2500; 
-        } elseif ($totalMinutes > 30 && $totalMinutes <= 60) {
-            $totalCost = 5000; 
+        if ($now < $pickupTime) {
+            $totalMinutes = ($now - $depositTime) / 60;
+            $totalHours = ceil($totalMinutes / 60);
+
+            if ($totalMinutes <= 30) {
+                $totalCostPerLocker = 2500;
+            } elseif ($totalMinutes > 30 && $totalMinutes <= 60) {
+                $totalCostPerLocker = 5000;
+            } else {
+                $totalCostPerLocker = $totalHours * 5000;
+            }
+            $totalCost = $totalCostPerLocker * $numLockers;
+            $reservation->total_price = $totalCost;
+            foreach ($reservation->locker_codes as $lockerCode) {
+                Locker::where('locker_code', $lockerCode)->update(['is_available' => 1]);
+            }
+            $reservation->delete();
+            return redirect()
+                ->route('admin.activity')
+                ->with('success', 'Reservasi selesai. Total biaya: Rp. ' . number_format($totalCost, 2, ',', '.'));
         } else {
-            $totalCost = $totalHours * 5000; 
+            $totalMinutesLate = ($now - $pickupTime) / 60;
+            $penalty = 0;
+
+            if ($totalMinutesLate > 0) {
+                $penaltyPerLocker = ceil($totalMinutesLate / 120) * 5000;
+            }
+            $totalPenalty = $penaltyPerLocker * $numLockers;
+            $reservation->penalty = $totalPenalty;
+            foreach ($reservation->locker_codes as $lockerCode) {
+                Locker::where('locker_code', $lockerCode)->update(['is_available' => 1]);
+            }
+
+            $reservation->delete();
+            return redirect()
+                ->route('admin.activity')
+                ->with('success', 'Reservasi selesai. Total biaya: Rp. ' . number_format($reservation->total_price + $totalPenalty, 2, ',', '.'));
         }
-
-        $reservation->total_price = $totalCost;
-
-        
-        foreach ($reservation->locker_codes as $lockerCode) {
-            Locker::where('locker_code', $lockerCode)->update(['is_available' => 1]);
-        }
-
-        $reservation->delete();
-
-        return redirect()->route('admin.activity')->with('success', 'Reservasi selesai lebih cepat. Total biaya: Rp. ' . number_format($totalCost, 2, ',', '.'));
-    } else {
-        
-        $totalMinutesLate = ($now - $pickupTime) / 60;
-        if ($totalMinutesLate > 0) {
-            
-            $penalty = ceil($totalMinutesLate / 120) * 5000; 
-            $reservation->penalty = $penalty;
-        }
-
-        
-        foreach ($reservation->locker_codes as $lockerCode) {
-            Locker::where('locker_code', $lockerCode)->update(['is_available' => 1]);
-        }
-
-        $reservation->delete();
-        
-        return redirect()->route('admin.activity')->with('success', 'Reservasi selesai. Total biaya: Rp. ' . number_format($reservation->total_price + $reservation->penalty, 2, ',', '.'));
     }
-}
+
     public function finish($id)
     {
         $reservation = Reservation::find($id);

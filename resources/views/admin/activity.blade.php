@@ -1,7 +1,5 @@
 @extends('admin.layouts.master')
-
 @section('judul', 'Aktivitas')
-
 @section('content')
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -56,7 +54,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Modal for showing details -->
                     <div class="modal fade" id="detailModal-{{ $reservation->id }}" tabindex="-1"
                         aria-labelledby="detailModalLabel-{{ $reservation->id }}" aria-hidden="true">
@@ -74,23 +71,25 @@
                                     <p><strong>Barang:</strong> {{ $reservation->item_name }}</p>
                                     <p><strong>Jam Penyimpanan:</strong> {{ $reservation->deposit_time }}</p>
                                     <p><strong>Jam Pengambilan:</strong> {{ $reservation->pickup_time }}</p>
-
                                     <!-- Locker and Price Details -->
                                     <table class="table mt-3">
                                         <thead>
                                             <tr>
                                                 <th>Jumlah Locker</th>
                                                 <th>Kode</th>
+                                                <th>Harga per Locker</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>{{ count($reservation->locker_codes) }}</td>
                                                 <td>{{ implode(', ', $reservation->locker_codes) }}</td>
+                                                <td>
+                                                    Rp. {{ number_format($reservation->total_price / count($reservation->locker_codes), 2, ',', '.') }}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
-
                                     <div class="text-end">
                                         <strong>Total Harga:</strong>
                                         <span class="text-primary">Rp.
@@ -103,27 +102,30 @@
                                         data-bs-target="#confirmFinishModal-{{ $reservation->id }}">
                                         Finish
                                     </button>
-                                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal"><i class="fas fa-print"></i> Print</button>
+                                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal"><i
+                                            class="fas fa-print"></i> Print</button>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <!-- Modal konfirmasi sebelum finish -->
                     <div class="modal fade" id="confirmFinishModal-{{ $reservation->id }}" tabindex="-1"
                         aria-labelledby="confirmFinishLabel-{{ $reservation->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmFinishLabel-{{ $reservation->id }}">Konfirmasi Pengambilan</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="confirmFinishLabel-{{ $reservation->id }}">Konfirmasi
+                                        Pengambilan</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <p>Apakah waktu pengambilan sesuai dengan yang dijadwalkan?</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form method="POST" action="{{ route('admin.activity.finish.confirm', $reservation->id) }}">
+                                    <form method="POST"
+                                        action="{{ route('admin.activity.finish.confirm', $reservation->id) }}">
                                         @csrf
                                         <input type="hidden" name="pickup_time" value="{{ $reservation->pickup_time }}">
                                         <input type="hidden" name="deposit_time" value="{{ $reservation->deposit_time }}">
@@ -144,16 +146,22 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="penaltyModalLabel-{{ $reservation->id }}">Harga dan Denda</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="penaltyModalLabel-{{ $reservation->id }}">Harga dan Denda
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p><strong>Harga Awal:</strong> Rp. {{ number_format($reservation->total_price, 2, ',', '.') }}</p>
-                                    <p><strong>Denda Tambahan:</strong> Rp. {{ number_format($reservation->penalty, 2, ',', '.') }}</p>
+                                    <p><strong>Harga Awal:</strong> Rp.
+                                        {{ number_format($reservation->total_price, 2, ',', '.') }}</p>
+                                    <p><strong>Denda Tambahan:</strong> Rp.
+                                        {{ number_format($reservation->penalty, 2, ',', '.') }}</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="{{ route('admin.activity.finish', $reservation->id) }}" class="btn btn-danger">Selesaikan</a>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal('{{ $reservation->id }}')">Close</button>
+                                    <a href="{{ route('admin.activity.finish', $reservation->id) }}"
+                                        class="btn btn-danger">Selesaikan</a>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                        onclick="closeModal('{{ $reservation->id }}')">Close</button>
                                 </div>
                             </div>
                         </div>
