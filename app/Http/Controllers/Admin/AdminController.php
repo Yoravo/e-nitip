@@ -36,7 +36,7 @@ class AdminController extends Controller
             'lockers' => 'required|array|max:5',
             'name' => 'required|string',
             'item_name' => 'required|string',
-            'phone_number' => 'required|string',
+            'phone_number' => 'required|numeric|digits_between:10,15',
             'deposit_time' => 'required',
             'pickup_time' => 'required',
         ]);
