@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,22 +10,20 @@
     <title>@yield('judul')</title>
     <link rel="icon" type="image/png" href="{{ asset('asset/media/e-nitip/e-nitip-favicon-red.png') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="{{ asset('asset/css/styles.css') }}" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-danger">
-
         <a class="navbar-brand fw-bold ps-4" href="{{ route('admin.dashboard') }}">E-Nitip</a>
-
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 text-white" id="sidebarToggle"
-            href="#!"><i class="fas fa-bars"></i></button>
-
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 text-white" id="sidebarToggle" href="#!">
+            <i class="bi bi-border-width"></i>
+        </button>
         <ul class="navbar-nav d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <li class=" dropdown nav-item">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i></a>
+                    data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
@@ -65,14 +64,12 @@
                         <a class="nav-link {{ request()->routeIs('admin.activity') ? 'active' : '' }}"
                             href="{{ route('admin.activity') }}">
                             <div class="sb-nav-link-icon">
-                                <i
-                                    class="fas fa-file-alt {{ request()->routeIs('admin.activity') ? 'text-primary' : '' }}"></i>
+                                <i class="fas fa-file-alt {{ request()->routeIs('admin.activity') ? 'text-primary' : '' }}"></i>
                             </div>
                             <span class="{{ request()->routeIs('admin.activity') ? 'text-primary' : '' }} fw-bold">
                                 Activity
                             </span>
                         </a>
-
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -81,7 +78,6 @@
                 </div>
             </nav>
         </div>
-
         <div id="layoutSidenav_content">
             <main>
                 @yield('content')
@@ -100,8 +96,6 @@
             </footer>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
     <script src="{{ asset('asset/js/scripts.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('asset/demo/chart-area-demo.js') }}"></script>
@@ -109,7 +103,10 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('asset/js/datatables-simple-demo.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('asset/js/close-modal.js') }}"></script>
     <script src="{{ asset('asset/js/phone.js') }}"></script>
